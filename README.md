@@ -1,6 +1,6 @@
 # N-queens-puzzle
 
-###python 3.8
+### python 3.8
 
 Solution description:
 
