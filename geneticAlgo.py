@@ -1,4 +1,5 @@
 import random
+import copy
 import numpy as np
 
 #tournamentSize = 2 #encoded
@@ -21,9 +22,13 @@ class Board:
         self.occupiedFields=set()
         self.quenMembers = []
         quenPositions = random.sample(range(0,n*n-1),n) # !!! n>1 !!! or exception will occur
+        i=0
         for nr in quenPositions:            #numbers go letf to right, top to bottom
-            self.quenMembers.append(Quen(nr%n,int(nr/n)))
-            self.occupiedFields.add(nr)
+            # self.quenMembers.append(Quen(nr%n,int(nr/n)))
+            # self.occupiedFields.add(nr)
+            self.quenMembers.append(Quen(i,0))
+            self.occupiedFields.add(i)
+            i+=1
         # Kth row, Nth collumn, field_nr = n*row + collumn
         # row = field_nr/n   collumn = field_nr%n
         self.updateLossFunction()
@@ -44,35 +49,36 @@ class Board:
         self.fitness = checks
 
     def printBoard(self):
+        print("Fitness: "+str(self.fitness))
         for quen in self.quenMembers:
-            print("Quen, ox: "+str(quen.x)+" oy: "+str(quen.y))
+             print("Quen, ox: "+str(quen.x)+" oy: "+str(quen.y))
 
 
 class Population:
-    def __init__(self, populationSize, boardSize, mutationProbability=0.2):
-        self.members = [Board(boardSize) for i in range(populationSize)]
+    def __init__(self, populationSize, boardSize, quenMutationProbability=0.02, boardMutationProbability=0.01):
         self.populationSize = populationSize
         self.boardSize = boardSize
-        self.mutationProbability = mutationProbability
+        self.quenMutationProbability = quenMutationProbability
+        self.boardMutationProbability = boardMutationProbability
+        self.members = [Board(boardSize) for i in range(populationSize)]
         self.distribution = [1.0/(populationSize * populationSize) * ((populationSize - i) * (populationSize - i) - (populationSize - i - 1) * (populationSize - i - 1)) for i in range(populationSize)]
 
     def tournamentSelection(self):
         bestBoards = []
         self.members.sort(key=lambda board: board.fitness)
         for i in range(self.populationSize):
-            member1 = self.members[0]#np.random.choice(self.members, self.distribution)
-            member2 = self.members[1]#np.random.choice(self.members, self.distribution)
-            if member1.fitness > member2.fitness:
-                bestBoards.append(member1)
+            tournament = np.random.choice(self.members, 2, self.distribution)
+            if tournament[0].fitness > tournament[1].fitness:
+                bestBoards.append(copy.deepcopy(tournament[0]))
             else:
-                bestBoards.append(member2)
+                bestBoards.append(copy.deepcopy(tournament[1]))
         return bestBoards
 
     def mutatedBoards(self, bestBoards):
         for board in bestBoards:
-            if random.uniform(0, 1) < self.mutationProbability:
+            if board != bestBoards[0] and random.uniform(0, 1) < self.boardMutationProbability:
                 for quen in board.quenMembers:
-                    if random.uniform(0, 1) < self.mutationProbability:
+                    if random.uniform(0, 1) < self.quenMutationProbability:
                         field = random.randint(0, self.boardSize*self.boardSize-1)
                         while field in board.occupiedFields:
                             field = random.randint(0, self.boardSize*self.boardSize-1)
@@ -91,4 +97,10 @@ class Population:
             self.members += mutatedBoards
             self.members.sort(key=lambda board: board.fitness)
             self.members = self.members[0:self.populationSize+1]
-            print("Epoch nr: "+str(i)+" fittest candidate: "+str(self.members[0].fitness))
+            self.members.sort(key=lambda board: board.fitness)
+
+            int = 0
+            for board in self.members:
+                int += board.fitness
+            avg = int/len(self.members)
+            print("Epoch nr: "+str(i)+" fittest candidate: "+str(self.members[0].fitness)+"  avg.fit: "+"%.2f" % avg)
