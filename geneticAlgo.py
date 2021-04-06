@@ -6,9 +6,6 @@ from operator import attrgetter
 # tournamentSize = 2 #encoded
 random.seed(0)
 
-
-# seed do zmiany
-
 class Queen:
     def __init__(self, x, y):
         self.x = x
@@ -42,7 +39,6 @@ class Board:
     def updateLossFunction(self):
         checks = 0
 
-        # do optymalizacji
         for queen1 in self.queenMembers:
             for queen2 in self.queenMembers:
                 if queen1 != queen2:
