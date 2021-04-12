@@ -57,7 +57,7 @@ class Board:
         for queen in self.queenMembers:
             print("Queen, ox: " + str(queen.x) + " oy: " + str(queen.y))
 
-    def printBoard2(self):
+    def paintBoard(self):
         print('\n')
         print(self.occupiedFields)
 
@@ -88,40 +88,48 @@ class Population:
             index = random.randint(0, self.boardSize - 1)
             tournament[0] = min(tournament, key=attrgetter('fitness'))
             tournament[1] = min(tournament[1], tournament[2], tournament[3], key=attrgetter('fitness'))
-            lengthOfSegm = random.randint(1, self.boardSize - index)
 
-            newBoard = Board(self.boardSize, False)
-            for x in range(lengthOfSegm):
-                newBoard.queenMembers[index + x] = copy.deepcopy(tournament[0].queenMembers[index + x])
-                newBoard.occupiedFields.add(
-                    tournament[0].queenMembers[index + x].y * self.boardSize
-                    + tournament[0].queenMembers[index + x].x)
-
-            newIndexChild = index + lengthOfSegm
-            newIndexParent = index + lengthOfSegm
-            while newIndexChild != index:
-                if (newIndexChild >= self.boardSize):
-                    newIndexChild = 0
-                    continue
-                if (newIndexParent >= self.boardSize):
-                    newIndexParent = 0
-                    continue
-                field = tournament[1].queenMembers[newIndexParent].y * self.boardSize + tournament[1].queenMembers[
-                    newIndexParent].x
-                if (field in newBoard.occupiedFields):
-                    newIndexParent += 1
-                else:
-                    newBoard.queenMembers[newIndexChild] = copy.deepcopy(tournament[1].queenMembers[newIndexParent])
-                    newBoard.occupiedFields.add(
-                        tournament[1].queenMembers[newIndexParent].y * self.boardSize
-                        + tournament[1].queenMembers[newIndexParent].x)
-
-                    newIndexChild += 1
-                    newIndexParent += 1
-            newBoard.updateLossFunction()
-            children.append(newBoard)
-
+            children.append(self.crossover(tournament[0],tournament[1]))
         return children
+
+    def crossover(self, board1, board2):
+        tournament = []
+        tournament.append(board1)
+        tournament.append(board2)
+
+        index = random.randint(0, self.boardSize - 1)
+        lengthOfSegm = random.randint(1, self.boardSize - index)
+        newBoard = Board(self.boardSize, False)
+        for x in range(lengthOfSegm):
+            newBoard.queenMembers[index + x] = copy.deepcopy(tournament[0].queenMembers[index + x])
+            newBoard.occupiedFields.add(
+                tournament[0].queenMembers[index + x].y * self.boardSize
+                + tournament[0].queenMembers[index + x].x)
+
+        newIndexChild = index + lengthOfSegm
+        newIndexParent = index + lengthOfSegm
+        while newIndexChild != index:
+            if (newIndexChild >= self.boardSize):
+                newIndexChild = 0
+                continue
+            if (newIndexParent >= self.boardSize):
+                newIndexParent = 0
+                continue
+            field = tournament[1].queenMembers[newIndexParent].y * self.boardSize + tournament[1].queenMembers[
+                newIndexParent].x
+            if (field in newBoard.occupiedFields):
+                newIndexParent += 1
+            else:
+                newBoard.queenMembers[newIndexChild] = copy.deepcopy(tournament[1].queenMembers[newIndexParent])
+                newBoard.occupiedFields.add(
+                    tournament[1].queenMembers[newIndexParent].y * self.boardSize
+                    + tournament[1].queenMembers[newIndexParent].x)
+
+                newIndexChild += 1
+                newIndexParent += 1
+        newBoard.updateLossFunction()
+        return newBoard
+
 
     def mutatedBoards(self, bestBoards):
         for board in bestBoards:
@@ -153,6 +161,6 @@ class Population:
                     fittestBoard = board
                 sumOfFitness += board.fitness
             avgFit = sumOfFitness / len(self.members)
-            fittestBoard.printBoard2()
+            fittestBoard.paintBoard()
             print()
             print("Epoch nr: " + str(i) + " fittest candidate: " + str(fittest) + "  avg.fit: " + "%.2f" % avgFit)
