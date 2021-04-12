@@ -4,17 +4,22 @@ from geneticAlgo import Quen
 from geneticAlgo import Board
 from geneticAlgo import Population
 
+class bcolors:
+    GREEN = "\033[96m"
+    ENDC = '\033[0m'
 
 class quenTests(unittest.TestCase):
     def testQuen1(self):
         q1 = Quen(1,2)
         self.assertEqual(q1.x, 1)
         self.assertEqual(q1.y, 2)
+        print(bcolors.GREEN + "\u2713 Test passed! test:  testQuen1 " + bcolors.ENDC)
 
     def testQuen2(self):
         q1 = Quen(-1,-2)
         self.assertEqual(q1.x, -1)
         self.assertEqual(q1.y, -2)
+        print(bcolors.GREEN + "\u2713 Test passed! test:  testQuen2 " + bcolors.ENDC)
 
     def testQuenEquality(self):
         q1 = Quen(-1,-2)
@@ -24,13 +29,14 @@ class quenTests(unittest.TestCase):
         q2.x = 0
         self.assertNotEqual(q1, q2)
         self.assertFalse(q1 == q2)
-
+        print(bcolors.GREEN + "\u2713 Test passed! test:  testQuenEquality " + bcolors.ENDC)
 
 class boardTests(unittest.TestCase):
     def testBoard1(self):
         b1 = Board(5)
         self.assertEqual(len(b1.occupiedFields), 5)
         self.assertEqual(len(b1.quenMembers), 5)
+        print(bcolors.GREEN + ".\u2713 Test passed! test:  testBoard1" + bcolors.ENDC)
 
     def testBoardFitnessSmall(self):
         b1 = Board(2)
@@ -45,6 +51,7 @@ class boardTests(unittest.TestCase):
         self.assertFalse(b1.quenMembers[0] == b1.quenMembers[1])
         b1.updateLossFunction()
         self.assertEqual(b1.fitness, 2)
+        print(bcolors.GREEN + "\u2713 Test passed! test:  testBoardFitnessSmall " + bcolors.ENDC)
 
     def testBoardFitnessBig1(self):
         b1 = Board(4)
@@ -58,6 +65,7 @@ class boardTests(unittest.TestCase):
         b1.quenMembers[3].y = 0;
         b1.updateLossFunction()
         self.assertEqual(b1.fitness, 12)
+        print(bcolors.GREEN + "\u2713 Test passed! test:  testBoardFitnessBig1 " + bcolors.ENDC)
 
     def testBoardFitnessBig2(self):
         b1 = Board(4)
@@ -71,6 +79,7 @@ class boardTests(unittest.TestCase):
         b1.quenMembers[3].y = 3;
         b1.updateLossFunction()
         self.assertEqual(b1.fitness, 12)
+        print(bcolors.GREEN + "\u2713 Test passed! test:  testBoardFitnessBig2 " + bcolors.ENDC)
 
     def testBoardFitnessBig3(self):
         b1 = Board(4)
@@ -84,6 +93,7 @@ class boardTests(unittest.TestCase):
         b1.quenMembers[3].y = 3;
         b1.updateLossFunction()
         self.assertEqual(b1.fitness, 12)
+        print(bcolors.GREEN + "\u2713 Test passed! test:  testBoardFitnessBig3 " + bcolors.ENDC)
 
     def testBoardFitnessBig4(self):
         b1 = Board(4)
@@ -97,35 +107,7 @@ class boardTests(unittest.TestCase):
         b1.quenMembers[3].y = 3;
         b1.updateLossFunction()
         self.assertEqual(b1.fitness, 12)
-
-class populationTest(unittest.TestCase):
-    def testSimplePopulation1(self):
-        p1 = Population(3,4)
-        self.assertEqual(len(p1.members), 3)
-        for i in range(3):
-            self.assertEqual(len(p1.members[i].quenMembers), 4)
-            self.assertEqual(len(p1.members[i].occupiedFields), 4)
-
-    def testSimplePopulation2(self):
-        p1 = Population(1,4,1) #mutationProb = 1 -> to make all members different
-        b1 = list([Board(4)])
-        b2 = p1.mutatedBoards(copy.deepcopy(b1))
-
-        self.assertTrue(b1[0].quenMembers[0] != b2[0].quenMembers[0])
-        self.assertTrue(b1[0].quenMembers[1] != b2[0].quenMembers[1])
-        self.assertTrue(b1[0].quenMembers[2] != b2[0].quenMembers[2])
-        self.assertTrue(b1[0].quenMembers[3] != b2[0].quenMembers[3])
-
-    def testSimplePopulation2(self):
-        p1 = Population(1,4,0) #mutationProb = 0 -> to make no changes
-        b1 = list([Board(4)])
-        b2 = p1.mutatedBoards(copy.deepcopy(b1))
-
-        self.assertTrue(b1[0].quenMembers[0] == b2[0].quenMembers[0])
-        self.assertTrue(b1[0].quenMembers[1] == b2[0].quenMembers[1])
-        self.assertTrue(b1[0].quenMembers[2] == b2[0].quenMembers[2])
-        self.assertTrue(b1[0].quenMembers[3] == b2[0].quenMembers[3])
-
+        print(bcolors.GREEN + "\u2713 Test passed! test:  testBoardFitnessBig4 " + bcolors.ENDC)
 
 if __name__ == '__main__':
     unittest.main()
