@@ -1,5 +1,3 @@
-from geneticAlgo import Quen
-from geneticAlgo import Board
 from geneticAlgo import Population
 import genetic_test
 import unittest
@@ -27,15 +25,15 @@ class bcolors:
 
 suite = unittest.TestLoader().loadTestsFromModule(genetic_test)
 unittest.TextTestRunner(verbosity=2).run(suite)
-print(bcolors.WARNING + "Warning: This may take a while... WARNING"+bcolors.ENDC)
+print(bcolors.WARNING + "Warning: This may take a while..."+bcolors.ENDC)
 
-p1 = Population("tournament", 50, 2000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
-p1 = Population("roulette", 50, 2000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
-p1 = Population("proportional", 50, 2000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
-p1 = Population("threshold", 50, 2000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
-p1 = Population("random", 50, 2000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
+p1 = Population("tournament", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)
+p1 = Population("roulette", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)
+p1 = Population("proportional", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)
+p1 = Population("threshold", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)
+p1 = Population("random", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)
