@@ -1,14 +1,14 @@
 # N-queens-puzzle
 
-### python 3.8
-
 ## Requirements:
+
+### python 3.8
 
 #### numpy
 
 #### progressbar2
 
-Solution description:
+## Solution description:
 
 3 classes - Quen, Board, Population
 
