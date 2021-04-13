@@ -2,10 +2,8 @@
 
 ## Requirements:
 
-##### python 3.X
-
+##### python 3
 ##### numpy
-
 ##### progressbar2
 
 ## Solution description:
