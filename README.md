@@ -2,6 +2,12 @@
 
 ### python 3.8
 
+## Requirements:
+
+# numpy
+
+# progressbar2
+
 Solution description:
 
 3 classes - Quen, Board, Population
