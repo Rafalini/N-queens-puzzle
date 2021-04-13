@@ -2,11 +2,11 @@
 
 ## Requirements:
 
-### python 3.8
+##### python 3.8
 
-#### numpy
+##### numpy
 
-#### progressbar2
+##### progressbar2
 
 ## Solution description:
 
