@@ -3,7 +3,6 @@ import copy
 import numpy as np
 import progressbar
 
-#tournamentSize = 2 #encoded
 random.seed(0)
 
 class Queen:
@@ -15,7 +14,6 @@ class Queen:
         if not isinstance(another, Queen):
             return NotImplemented
         return self.x == another.x and self.y == another.y
-
 
 class Board:
     def __init__(self, boardSize, populate=False):
@@ -58,7 +56,6 @@ class Board:
         print("Fitness: "+str(self.fitness))
         for queen in self.queenMembers:
              print("Queen, ox: "+str(queen.x)+" oy: "+str(queen.y))
-
 
 class Population:
     history = []
@@ -159,9 +156,7 @@ class Population:
         return bestBoards
 
     def evolve(self, epochs):
-        # f = open("log.txt", "a")
-        # f.write("Now the file has more content!")
-        # f.close()
+        f = open("log.txt", "a")
         for i in progressbar.progressbar(range(epochs)):
             bestBoards = self.selectionDict[self.selection]()
             mutatedBoards = self.mutatedBoards(bestBoards)
@@ -176,7 +171,9 @@ class Population:
             avg = int/len(self.members)
             #print("Epoch nr: "+str(i)+" fittest candidate: "+str(self.members[0].fitness)+"  avg.fit: "+"%.2f" % avg)
             self.history.append({"epoch":i+1, "bestFitness":self.members[0].fitness, "averageFitness":avg})
+            f.write(str(i+1)+" "+str(self.members[0].fitness)+" "+str(avg)+"\n")
         self.printStats()
+        f.close()
 
     def printStats(self):
         print("Epochs run: "+str(self.history[-1]["epoch"])+" best fitness: "+ "%.2f"%self.history[-1]["averageFitness"]+ "  method: "+self.selection)
