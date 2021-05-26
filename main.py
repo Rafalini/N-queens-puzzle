@@ -27,13 +27,13 @@ suite = unittest.TestLoader().loadTestsFromModule(genetic_test)
 unittest.TextTestRunner(verbosity=2).run(suite)
 print(bcolors.WARNING + "Warning: This may take a while..."+bcolors.ENDC)
 
-p1 = Population("tournament", 50, 50, 20) #boardSize, population, seedPopulation
-p1.evolve(20)
-# p1 = Population("roulette", 50, 500, 20) #boardSize, population, seedPopulation
-# p1.evolve(150)
-# p1 = Population("proportional", 50, 500, 20) #boardSize, population, seedPopulation
-# p1.evolve(150)
-# p1 = Population("threshold", 50, 500, 20) #boardSize, population, seedPopulation
-# p1.evolve(150)
-# p1 = Population("random", 50, 500, 20) #boardSize, population, seedPopulation
-# p1.evolve(150)
+p1 = Population("tournament", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)
+p1 = Population("roulette", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)
+p1 = Population("proportional", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)
+p1 = Population("threshold", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)
+p1 = Population("random", 50, 500, 20) #boardSize, population, seedPopulation
+p1.evolve(150)

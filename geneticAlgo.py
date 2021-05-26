@@ -156,7 +156,9 @@ class Population:
         return bestBoards
 
     def evolve(self, epochs):
-        f = open("log.txt", "a")
+        filename = "log_"+self.selection+"_"+str(self.boardSize)+"_"+str(self.populationSize)
+        f = open(filename, "w")
+        f.write("Epochs,Best fitness,Average fitness\n")
         for i in progressbar.progressbar(range(epochs)):
             bestBoards = self.selectionDict[self.selection]()
             mutatedBoards = self.mutatedBoards(bestBoards)
@@ -171,7 +173,7 @@ class Population:
             avg = int/len(self.members)
             #print("Epoch nr: "+str(i)+" fittest candidate: "+str(self.members[0].fitness)+"  avg.fit: "+"%.2f" % avg)
             self.history.append({"epoch":i+1, "bestFitness":self.members[0].fitness, "averageFitness":avg})
-            f.write(str(i+1)+" "+str(self.members[0].fitness)+" "+str(avg)+"\n")
+            f.write(str(i+1)+","+str(self.members[0].fitness)+","+str(avg)+"\n")
         self.printStats()
         f.close()
 
