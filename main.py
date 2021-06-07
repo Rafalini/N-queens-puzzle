@@ -37,3 +37,6 @@ p1 = Population("threshold", 50, 1000, 20) #boardSize, population, seedPopulatio
 p1.evolve(1500)
 p1 = Population("random", 50, 1000, 20) #boardSize, population, seedPopulation
 p1.evolve(1500)
+
+# p1 = PopulationEvol(3000, 15, 0.1, 0.4) # populationSize, boardSize, queenMutationProbability, boardMutationProbability
+# p1.evolve(200)

@@ -156,7 +156,7 @@ class Population:
         return bestBoards
 
     def evolve(self, epochs):
-        filename = "log_"+self.selection+"_"+str(self.boardSize)+"_"+str(self.populationSize)
+        filename = "log_"+self.selection+"_"+str(self.boardSize)+"_"+str(self.populationSize)+"_"+str(self.queenMutationProbability)+"_"+str(self.boardMutationProbability)
         f = open(filename, "w")
         f.write("Epochs,Best fitness,Average fitness\n")
         for i in progressbar.progressbar(range(epochs)):
