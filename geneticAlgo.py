@@ -178,4 +178,4 @@ class Population:
         f.close()
 
     def printStats(self):
-        print("Epochs run: "+str(self.history[-1]["epoch"])+" best fitness: "+ "%.2f"%self.history[-1]["averageFitness"]+ "  method: "+self.selection)
+        print("Epochs run: "+str(self.history[-1]["epoch"])+" best fitness: "+ str(self.history[-1]["bestFitness"])+ "  method: "+self.selection)
