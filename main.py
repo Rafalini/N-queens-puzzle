@@ -31,6 +31,10 @@ print(bcolors.WARNING + "Warning: This may take a while..."+bcolors.ENDC)
 # p1.evolve(250)
 p1 = Population("tournament", 50, 100, 20) #boardSize, population, seedPopulation
 p1.evolve(400)
+p1 = Population("tournament", 50, 1000, 200) #boardSize, population, seedPopulation
+p1.evolve(400)
+p1 = Population("tournament", 50, 5000, 1000) #boardSize, population, seedPopulation
+p1.evolve(400)
 # p1 = Population("tournament", 50, 200, 20) #boardSize, population, seedPopulation
 # p1.evolve(400)
 # p1 = Population("roulette", 50, 100, 20) #boardSize, population, seedPopulation

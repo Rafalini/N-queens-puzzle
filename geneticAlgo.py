@@ -165,8 +165,8 @@ class Population:
         f.write("Epochs,Best fitness "+self.selection+",Average fitness "+self.selection+"\n")
         for i in progressbar.progressbar(range(epochs)):
             bestBoards = self.selectionDict[self.selection]()
-            # mutatedBoards = self.mutatedBoards(bestBoards)
-            # self.members += mutatedBoards
+            mutatedBoards = self.mutatedBoards(bestBoards)
+            self.members += mutatedBoards
             self.members.sort(key=lambda board: board.fitness)
             self.members = self.members[0:self.populationSize+1]
             self.members.sort(key=lambda board: board.fitness)
