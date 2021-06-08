@@ -1,7 +1,6 @@
 import random
 import copy
 import numpy as np
-from operator import attrgetter
 
 random.seed(0)
 

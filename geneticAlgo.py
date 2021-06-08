@@ -2,6 +2,7 @@ import random
 import copy
 import numpy as np
 import progressbar
+import os
 
 random.seed(0)
 
@@ -157,12 +158,15 @@ class Population:
 
     def evolve(self, epochs):
         filename = "log_"+self.selection+"_"+str(self.boardSize)+"_"+str(self.populationSize)+"_"+str(self.queenMutationProbability)+"_"+str(self.boardMutationProbability)
-        f = open(filename, "w")
-        f.write("Epochs,Best fitness,Average fitness\n")
+        if not os.path.exists(str(epochs)):
+            os.mkdir(str(epochs))
+
+        f = open("./"+str(epochs)+"/"+filename, "w")
+        f.write("Epochs,Best fitness "+self.selection+",Average fitness "+self.selection+"\n")
         for i in progressbar.progressbar(range(epochs)):
             bestBoards = self.selectionDict[self.selection]()
-            mutatedBoards = self.mutatedBoards(bestBoards)
-            self.members += mutatedBoards
+            # mutatedBoards = self.mutatedBoards(bestBoards)
+            # self.members += mutatedBoards
             self.members.sort(key=lambda board: board.fitness)
             self.members = self.members[0:self.populationSize+1]
             self.members.sort(key=lambda board: board.fitness)

@@ -27,16 +27,22 @@ suite = unittest.TestLoader().loadTestsFromModule(genetic_test)
 unittest.TextTestRunner(verbosity=2).run(suite)
 print(bcolors.WARNING + "Warning: This may take a while..."+bcolors.ENDC)
 
-p1 = Population("tournament", 50, 1000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
-p1 = Population("roulette", 50, 1000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
-p1 = Population("proportional", 50, 1000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
-p1 = Population("threshold", 50, 1000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
-p1 = Population("random", 50, 1000, 20) #boardSize, population, seedPopulation
-p1.evolve(1500)
+# p1 = Population(300, 50, 0.1, 0.4) # populationSize, boardSize, queenMutationProbability, boardMutationProbability
+# p1.evolve(250)
+p1 = Population("tournament", 50, 100, 20) #boardSize, population, seedPopulation
+p1.evolve(400)
+# p1 = Population("tournament", 50, 200, 20) #boardSize, population, seedPopulation
+# p1.evolve(400)
+# p1 = Population("roulette", 50, 100, 20) #boardSize, population, seedPopulation
+# p1.evolve(100)
+# p1 = Population("proportional", 50, 100, 20) #boardSize, population, seedPopulation
+# p1.evolve(100)
+# p1 = Population("threshold", 50, 100, 20) #boardSize, population, seedPopulation
+# p1.evolve(100)
+# p1 = Population("random", 50, 100, 20) #boardSize, population, seedPopulation
+# p1.evolve(100)
+#
+
 
 # p1 = PopulationEvol(3000, 15, 0.1, 0.4) # populationSize, boardSize, queenMutationProbability, boardMutationProbability
 # p1.evolve(200)
