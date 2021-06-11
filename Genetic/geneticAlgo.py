@@ -64,7 +64,7 @@ class Population:
     #boardSize = board side, board with N size has N*N squares on it
     #populationSize = population size
     #seedPopulationSize = how many indyviduals will be mutated and to current population
-    def __init__(self, selection, boardSize, populationSize, seedPopulationSize=4, queenMutationProbability=0.1, boardMutationProbability=0.5):
+    def __init__(self, path, selection, boardSize, populationSize, seedPopulationSize=4, queenMutationProbability=0.1, boardMutationProbability=0.5, cross=True):
         if boardSize <= 0:
             raise ValueError('Board size cannot be lower than 1!')
         if populationSize <= 0:
@@ -77,7 +77,11 @@ class Population:
             raise ValueError('Queen mutation probability must be in range (0;1)')
         if boardMutationProbability <= 0 or 1 <= boardMutationProbability:
             raise ValueError('Board mutation probability must be in range (0;1)')
+        if not os.path.exists(path+"/"):
+            os.mkdir(path+"/")
 
+        self.cross = cross
+        self.path = path
         self.selection = selection
         self.populationSize = populationSize
         self.boardSize = boardSize
@@ -92,7 +96,35 @@ class Population:
                                 "proportional":self.proportionalSelection,
                                 "threshold":self.thresholdSelection,
                                 "random":self.randomSelection}
+    def setPopulation(self, selection, boardSize, populationSize, seedPopulationSize=4, queenMutationProbability=0.1, boardMutationProbability=0.5, cross=True):
+        if boardSize <= 0:
+            raise ValueError('Board size cannot be lower than 1!')
+        if populationSize <= 0:
+            raise ValueError('Population size cannot be lower than 1!')
+        if seedPopulationSize <= 0:
+            raise ValueError('Seed population size cannot be lower than 1!')
+        if populationSize < seedPopulationSize:
+            raise ValueError('Population size cannot be lower than seed population for next generation!')
+        if queenMutationProbability <= 0 or 1 <= queenMutationProbability:
+            raise ValueError('Queen mutation probability must be in range (0;1)')
+        if boardMutationProbability <= 0 or 1 <= boardMutationProbability:
+            raise ValueError('Board mutation probability must be in range (0;1)')
 
+        self.cross = cross
+        self.selection = selection
+        self.populationSize = populationSize
+        self.boardSize = boardSize
+        self.seedPopulationSize = int(seedPopulationSize)
+        self.queenMutationProbability = queenMutationProbability
+        self.boardMutationProbability = boardMutationProbability
+        self.members = [Board(boardSize, True) for i in range(populationSize)]
+
+        self.tournamentDistribution = [1.0/(populationSize * populationSize) * ((populationSize - i) * (populationSize - i) - (populationSize - i - 1) * (populationSize - i - 1)) for i in range(populationSize)]
+        self.selectionDict = {  "tournament":self.tournamentSelection,
+                                "roulette":self.rouletteSelection,
+                                "proportional":self.proportionalSelection,
+                                "threshold":self.thresholdSelection,
+                                "random":self.randomSelection}
 
     def tournamentSelection(self):
         selectedBoards = []
@@ -130,7 +162,7 @@ class Population:
         for i in range(self.populationSize):
             costFunSum += self.members[i].fitness
         for i in range(self.populationSize):
-            if self.members[i].fitness > costFunSum/self.populationSize:
+            if self.members[i].fitness >= costFunSum/self.populationSize:
                 thresholdWeights.append(1)
             else:
                 thresholdWeights.append(0)
@@ -158,15 +190,16 @@ class Population:
 
     def evolve(self, epochs):
         filename = "log_"+self.selection+"_"+str(self.boardSize)+"_"+str(self.populationSize)+"_"+str(self.queenMutationProbability)+"_"+str(self.boardMutationProbability)
-        if not os.path.exists(str(epochs)):
-            os.mkdir(str(epochs))
+        if not os.path.exists(self.path+"/"+str(epochs)+"/"):
+            os.mkdir(self.path+"/"+str(epochs)+"/")
 
-        f = open("./"+str(epochs)+"/"+filename, "w")
+        f = open(self.path+"/"+str(epochs)+"/"+filename, "w")
         f.write("Epochs,Best fitness "+self.selection+",Average fitness "+self.selection+"\n")
         for i in progressbar.progressbar(range(epochs)):
             bestBoards = self.selectionDict[self.selection]()
-            mutatedBoards = self.mutatedBoards(bestBoards)
-            self.members += mutatedBoards
+            if self.cross:
+                mutatedBoards = self.mutatedBoards(bestBoards)
+                self.members += mutatedBoards
             self.members.sort(key=lambda board: board.fitness)
             self.members = self.members[0:self.populationSize+1]
             self.members.sort(key=lambda board: board.fitness)
