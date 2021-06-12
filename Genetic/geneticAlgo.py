@@ -64,7 +64,7 @@ class Population:
     #boardSize = board side, board with N size has N*N squares on it
     #populationSize = population size
     #seedPopulationSize = how many indyviduals will be mutated and to current population
-    def __init__(self, path, selection, boardSize, populationSize, seedPopulationSize=4, queenMutationProbability=0.1, boardMutationProbability=0.5, cross=True):
+    def __init__(self, path, selection, boardSize, populationSize, seedPopulationSize=4, cross=True, queenMutationProbability=0.1, boardMutationProbability=0.5):
         if boardSize <= 0:
             raise ValueError('Board size cannot be lower than 1!')
         if populationSize <= 0:

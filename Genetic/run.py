@@ -52,29 +52,29 @@ p1.setPopulation("tournament", 50, 100, 20) #boardSize, population, seedPopulati
 p1.evolve(600)
 
 print("\n03_CrossTest test...\n")
-p1 = Population("03_CrossTest", "tournament", 50, 100, 20, True) #boardSize, population, seedPopulation
+p1 = Population("03_CrossTest", "tournament", 50, 100, 20, False) #boardSize, population, seedPopulation
 p1.evolve(400)
-p1.setPopulation("tournament", 50, 100, 20, False) #boardSize, population, seedPopulation
+p1.setPopulation("tournament", 50, 100, 20) #boardSize, population, seedPopulation
 p1.evolve(400)
 
 print("\n04_PopulationSize test...\n")
-p1 = Population("04_PopulationSize", "tournament", 50, 100, 20, True) #boardSize, population, seedPopulation
+p1 = Population("04_PopulationSize", "tournament", 50, 100, 20) #boardSize, population, seedPopulation
 p1.evolve(300)
-p1.setPopulation("tournament", 50, 1000, 20, False) #boardSize, population, seedPopulation
+p1.setPopulation("tournament", 50, 1000, 20) #boardSize, population, seedPopulation
 p1.evolve(300)
-p1.setPopulation("tournament", 50, 10000, 20, False) #boardSize, population, seedPopulation
+p1.setPopulation("tournament", 50, 10000, 20) #boardSize, population, seedPopulation
 p1.evolve(300)
 
 print("\n05_PopulationSize2 test...\n")
-p1 = Population("05_PopulationSize2", "tournament", 50, 100, 20, True) #boardSize, population, seedPopulation
+p1 = Population("05_PopulationSize2", "tournament", 50, 100, 20) #boardSize, population, seedPopulation
 p1.evolve(300)
-p1.setPopulation("tournament", 50, 1000, 200, False) #boardSize, population, seedPopulation
+p1.setPopulation("tournament", 50, 1000, 200) #boardSize, population, seedPopulation
 p1.evolve(300)
-p1.setPopulation("tournament", 50, 10000, 2000, False) #boardSize, population, seedPopulation
+p1.setPopulation("tournament", 50, 10000, 2000) #boardSize, population, seedPopulation
 p1.evolve(300)
 
 print("\n06_LongRun test...\n")
-p1 = Population("06_LongRun", "tournament", 50, 100, 20, True) #boardSize, population, seedPopulation
+p1 = Population("06_LongRun", "tournament", 50, 100, 20) #boardSize, population, seedPopulation
 p1.evolve(10000)
 p1.setPopulation("proportional", 50, 100, 20) #boardSize, population, seedPopulation
 p1.evolve(10000)
