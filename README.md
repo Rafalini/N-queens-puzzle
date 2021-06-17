@@ -2,14 +2,25 @@
 
 ## Requirements:
 
-##### python 3
-##### numpy
-##### progressbar2
+ python 3
+ numpy
+ progressbar2
+ matplotlib
 
-## Solution description:
+##Usage
 
-3 classes - Quen, Board, Population
+To start pre-defined simulation
 
-Quen is basic unit, consists of coordinates of actual square where quen stands.
-Board represents chess board (N*N square) with N Quens (each on different square).
-Population is set of Boards that are evolving. :)
+:$ python3 run.py
+
+##Charts
+
+To draw chart from multiple files:
+
+:$ python3 charts.py <file_1> <file_2> <file_3>
+
+#Note: data in each file shold be formated, headers and data in row should be separated by comma for example:
+<header_1>, <header_2>, <header_3>
+1,2,3
+2,3,4
+...

@@ -38,6 +38,16 @@ class Board:
         # row = field_nr/n   collumn = field_nr%n
         self.updateLossFunction()
 
+    def print(self):
+        for i in range(self.boardSize):
+            for j in range(self.boardSize):
+                if i*self.boardSize+j in self.occupiedFields:
+                    print("+", end = '')
+                else:
+                    print("-", end = '')
+            print("")
+
+
     def updateLossFunction(self):
         checks = 0
         for queen1 in self.queenMembers:
@@ -216,3 +226,6 @@ class Population:
 
     def printStats(self):
         print("Epochs run: "+str(self.history[-1]["epoch"])+" best fitness: "+ str(self.history[-1]["bestFitness"])+ "  method: "+self.selection)
+
+    def print(self):
+        self.members[0].print()
